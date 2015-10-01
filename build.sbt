@@ -36,11 +36,14 @@ lazy val threadFlowApacheHttpClient = Project("thread-flow-httpclient", file("th
 lazy val threadFlowScala = Project("thread-flow-scala", file("thread-flow-scala"))
   .dependsOn(threadFlowCore, threadFlowJava)
   .settings(defaultScalariformSettings)
+  .settings(
+    libraryDependencies += "org.specs2" %% "specs2-core" % "3.6.4" % Test
+  )
   .cross
 
-lazy val threadFlowScala2_10 = threadFlowScala("2.10.6")
+lazy val threadFlowScala2_10 = threadFlowScala("2.10.6").dependsOn(threadFlowTest2_10 % Test)
 
-lazy val threadFlowScala2_11 = threadFlowScala("2.11.7")
+lazy val threadFlowScala2_11 = threadFlowScala("2.11.7").dependsOn(threadFlowTest2_11 % Test)
 
 lazy val threadFlowAkka = Project("thread-flow-akka", file("thread-flow-akka"))
   .settings(defaultScalariformSettings)
