@@ -40,7 +40,7 @@ for (int i = 0; i < 5; i++) {
     executorService.submit(new Runnable() {
         public void run() {
             System.out.println(String.format("%d %s", i, flow.getValue()));
-            Thread.sleep(1);
+            Thread.sleep(1000);
         }
     });
 }
@@ -51,7 +51,7 @@ for (int i = 5; i < 10; i++) {
     executorService.submit(new Runnable() {
         public void run() {
             System.out.println(String.format("%d %s", i, flow.getValue()));
-            Thread.sleep(1);
+            Thread.sleep(1000);
         }
     });
 }
@@ -80,7 +80,7 @@ The equivalent of the Java example is
 import com.lucidchart.threadflow.ThreadLocalStore
 import com.lucidchart.threadflow.scala.Flow
 import java.util.concurrent.Executors
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 val flow = Flow(new ThreadLocalStore)
 implicit val executionContext = flow(
@@ -91,13 +91,13 @@ implicit val executionContext = flow(
 flow.value = Some("foo")
 (0 until 5).foreach(i => Future {
   println(s"$i ${flow.value.getOrElse("")}")
-  Thread.sleep(1)
+  Thread.sleep(1000)
 })
 
 flow.value = Some("bar")
 (5 until 10).foreach(i => Future {
   println(s"$i ${flow.value.getOrElse("")}")
-  Thread.sleep(1)
+  Thread.sleep(1000)
 })
 ```
 
