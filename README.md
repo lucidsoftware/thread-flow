@@ -88,15 +88,15 @@ implicit val executionContext = flow(
 )
 
 
-flow.value = Some("foo")
+flow.store.value = Some("foo")
 (0 until 5).foreach(i => Future {
-  println(s"$i ${flow.value.getOrElse("")}")
+  println(s"$i ${flow.store.value.getOrElse("")}")
   Thread.sleep(1000)
 })
 
-flow.value = Some("bar")
+flow.store.value = Some("bar")
 (5 until 10).foreach(i => Future {
-  println(s"$i ${flow.value.getOrElse("")}")
+  println(s"$i ${flow.store.value.getOrElse("")}")
   Thread.sleep(1000)
 })
 ```

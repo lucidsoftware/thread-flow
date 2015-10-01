@@ -3,18 +3,18 @@ package com.lucidchart.threadflow.scala
 import com.lucidchart.threadflow.{AggregateFlowStore, BaseFlow, FlowStore}
 import scala.concurrent.{ExecutionContext, Future}
 
-class Flow(store: FlowStore) extends BaseFlow(store) with ScalaOptionFlow {
+case class Flow(store: ScalaFlowStore) {
 
   def withId[A](id: String)(f: => A) = {
-    value = Some(id)
+    store.value = Some(id)
     try {
       f
     } finally {
-      value = None
+      store.value = None
     }
   }
 
-  def apply[A](f: () => A) = value.fold(f)(id => () => withId(id)(f()))
+  def apply[A](f: () => A) = store.value.fold(f)(id => () => withId(id)(f()))
 
   def apply(executionContext: ExecutionContext): ExecutionContext = {
     new WrappedExecutionContext(executionContext) with ProxyExecutionContext {
