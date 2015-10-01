@@ -23,4 +23,4 @@ jdk:
   - openjdk6
 language: java
 script:
-  - sbt test package
+  - sbt 'all test it:test package'
