@@ -11,7 +11,7 @@ public class HttpFlow extends BaseFlow {
     }
 
     public HttpClientBuilder addFlowHeader(HttpClientBuilder builder) {
-        return builder.addInterceptorFirst(new FlowHttpRequestInterceptor(store));
+        return builder.addInterceptorFirst(new FlowHttpRequestInterceptor(getStore()));
     }
 
 }

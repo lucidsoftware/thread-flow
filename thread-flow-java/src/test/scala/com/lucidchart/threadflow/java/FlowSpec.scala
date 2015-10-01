@@ -9,12 +9,12 @@ object FlowSpec extends Specification {
   "wrapCallable" should {
     "preverse flow id" in {
       val flow = new Flow(new MockFlowStore)
-      flow.setValue("foo")
+      flow.getStore.set("foo")
       val wrap = flow.wrapCallable(new Callable[Unit] {
-        def call() = flow.getValue must_== "foo"
+        def call() = flow.getStore.get must_== "foo"
       })
       wrap.call()
-      flow.getValue must beNull
+      flow.getStore.get must beNull
     }
   }
 
@@ -25,10 +25,10 @@ object FlowSpec extends Specification {
       def submit(id: Option[String]) {
         executorService.submit(new Runnable {
           def run() = {
-            flow.setValue(id.orNull)
+            flow.getStore.set(id.orNull)
             new Runnable {
               def run() = {
-                Option(flow.getValue) must_== id
+                Option(flow.getStore.get()) must_== id
               }
             }
           }

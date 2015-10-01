@@ -2,18 +2,14 @@ package com.lucidchart.threadflow;
 
 public class BaseFlow {
 
-    final protected FlowStore store;
+    private final FlowStore store;
 
     public BaseFlow(FlowStore store) {
         this.store = store;
     }
 
-    public String getValue() {
-        return store.get();
-    }
-
-    public void setValue(String value) {
-        store.set(value);
+    public FlowStore getStore() {
+        return store;
     }
 
 }

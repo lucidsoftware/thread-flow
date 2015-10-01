@@ -19,26 +19,18 @@ public class Flow extends BaseFlow {
         super(store);
     }
 
-    public String getValue() {
-        return store.get();
-    }
-
-    public void setValue(String value) {
-        store.set(value);
-    }
-
     public Runnable wrapRunnable(final Runnable runnable) {
-        final String id = store.get();
+        final String id = getStore().get();
         if (id == null) {
             return runnable;
         } else {
             return new Runnable() {
                 public void run() {
-                    store.set(id);
+                    getStore().set(id);
                     try {
                         runnable.run();
                     } finally {
-                        store.set(null);
+                        getStore().set(null);
                     }
                 }
             };
@@ -46,17 +38,17 @@ public class Flow extends BaseFlow {
     }
 
     public <V> Callable<V> wrapCallable(final Callable<V> callable) {
-        final String id = store.get();
+        final String id = getStore().get();
         if (id == null) {
             return callable;
         } else {
             return new Callable<V>() {
                 public V call() throws Exception {
-                    store.set(id);
+                    getStore().set(id);
                     try {
                         return callable.call();
                     } finally {
-                        store.set(null);
+                        getStore().set(null);
                     }
                 }
             };
