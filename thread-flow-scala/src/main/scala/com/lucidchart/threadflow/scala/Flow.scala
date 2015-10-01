@@ -23,8 +23,7 @@ case class Flow(store: ScalaFlowStore) {
   }
 
   def future[A](f: => A)(implicit executionContext: ExecutionContext) = {
-    val g = apply(() => f)
-    Future(g())
+    store.value.fold(Future(f))(id => Future(withId(id)(f)))
   }
 
 }
