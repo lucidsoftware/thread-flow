@@ -1,0 +1,8 @@
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+.ensime
+.history
+.idea*
+target*/

@@ -1,0 +1,26 @@
+after_success:
+  - |
+    if [ -n "$TRAVIS_TAG" ]; then
+        mkdir ~/.pgp
+        echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
+        echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
+        sbt publishSigned
+    elif [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$TRAVIS_BRANCH" == master ]; then
+        mkdir ~/.pgp
+        echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
+        echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
+        sbt publishSigned
+    fi
+deploy:
+  api_key: $GITHUB_AUTH
+  file: target/**/*.jar
+  file_glob: true
+  on:
+    tags: true
+  provider: releases
+  skip_cleanup: true
+jdk:
+  - openjdk6
+language: java
+script:
+  - sbt test package
