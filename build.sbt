@@ -45,6 +45,8 @@ lazy val threadFlowScala2_10 = threadFlowScala("2.10.6").dependsOn(threadFlowTes
 
 lazy val threadFlowScala2_11 = threadFlowScala("2.11.7").dependsOn(threadFlowTest2_11 % Test)
 
+lazy val threadFlowScalaAggregate = threadFlowScala.aggregate(threadFlowScala2_10, threadFlowScala2_11)
+
 lazy val threadFlowAkka = Project("thread-flow-akka", file("thread-flow-akka"))
   .settings(defaultScalariformSettings)
   .settings(
